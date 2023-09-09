@@ -1,7 +1,5 @@
 <x-app-layout>
     <x-slot name="header">
-       
-    </x-slot>
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,23 +44,13 @@
                     </div>
                     <div class="col-6">
                     <select class="select4" name="company_name" id="country">
-                        <option value="{{ $company->name }}">Please Select</option>
+                        <option>Please Select</option>
                         @foreach($names as $country)
                         <option value="{{$country->name}}">{{$country->name}}</option>
-                        @endforeach</select>
+                        @endforeach
+                    </select>
                     </div>
                 </div>
-                </div>
-                <!-- <div class="row">
-                    <div class="col-6">
-                        <label >Status:</label>
-                    </div>
-                    <div class="col-6">
-                    <select class="select4" name="active" id="country">
-                        <option value="{{ $company->name }}">Please Select</option>
-                        <option value=1>Active</option>
-                        <option value=0>Inactive</option>
-                    </div> -->
                 </div>
             <div class="container mt-3">
                 <center><button type="submit" class="btn btn-primary">Submit</button></center>

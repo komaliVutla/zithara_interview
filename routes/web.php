@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CompanyController;
+use App\Models\Contact;
+use App\Models\Company;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,9 @@ Route::resource('contacts', ContactController::class)->middleware(['auth', 'veri
 Route::resource('companies', CompanyController::class)->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $contacts = Contact::count();
+    $companies = Company::count();
+    return view('dashboard', compact('companies', 'contacts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
