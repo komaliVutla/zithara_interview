@@ -16,8 +16,9 @@ use App\Http\Controllers\CompanyController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::resource('contacts', ContactController::class);
-Route::resource('companies', CompanyController::class);
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+    // Your protected API routes go here
+    Route::resource('contacts', ContactController::class)->middleware(['auth', 'verified']);
+    Route::resource('companies', CompanyController::class)->middleware(['auth', 'verified']);

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->bigInteger('phone');
-            $table->integer('points');
+            $table->integer('points')->default(0);
             $table->boolean('active')->default(0);
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');;

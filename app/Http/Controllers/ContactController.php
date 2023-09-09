@@ -17,7 +17,7 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::all();
-        return $contacts;
+        return view('contacts.index', compact('contacts'));
     }
 
     /**
@@ -27,7 +27,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return view('contacts.create');
+        $names = Company::select('name')->get();
+        return view('contacts.create', compact('names'));
     }
 
     /**
@@ -43,8 +44,6 @@ class ContactController extends Controller
         $contact->last_name = $request->last_name;
         $contact->email = $request->email;
         $contact->phone = $request->phone;
-        $contact->points = $request->points;
-        $contact->active = $request->active;
         $company = Company::where('name', $request->company_name)->first();
         if($company)
         {
@@ -54,7 +53,7 @@ class ContactController extends Controller
             abort(404, "Company not found");
         }
         $contact->save();
-        return "Contact details are stored successfully";
+        return redirect()->route('contacts.index')->with('success','Contact has been created successfully.');
     }
 
     /**
@@ -76,7 +75,9 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        //
+        $company = Company::where('id', $contact->company_id)->select('name')->first();
+        $names = Company::select('name')->get();
+        return view('contacts.edit', compact('company', 'contact', 'names'));
     }
 
     /**
@@ -95,8 +96,6 @@ class ContactController extends Controller
             $contact->last_name = $request->last_name;
             $contact->email = $request->email;
             $contact->phone = $request->phone;
-            $contact->points = $request->points;
-            $contact->active = $request->active;
             $company = Company::where('name', $request->company_name)->first();
             if($company)
             {
@@ -110,7 +109,7 @@ class ContactController extends Controller
         else{
             abort(404, "Contact not found");
         }
-        return "Contact details are updated successfully";
+        return redirect()->route('contacts.index')->with('success','Contact Has Been updated successfully');
     }
 
     /**
@@ -122,6 +121,6 @@ class ContactController extends Controller
     public function destroy(Contact $contact)
     {
         $contact->delete();
-        return "Contact deleted successfully";
+        return redirect()->route('contacts.index')->with('success','Contact has been deleted successfully');
     }
 }
